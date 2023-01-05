@@ -1,0 +1,42 @@
+---
+- hosts: ROUTERS
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: Change Host name
+      ios_config:
+        lines:
+          - hostname home-R1
+    - name: Change Banner
+      ios_banner:
+        banner: motd
+        text: |
+          This device is secured!
+        state: present
+    - name: Add google DNS
+      ios_config:
+        lines:
+          - ip domain-name google.com
+    - name: Change Secret
+      ios_config:
+        lines:
+          - enable secret Student1
+    - name: Nat Outside
+      ios_config:
+        lines:
+          - ip nat outside
+        parents: int e1/0
+    - name: Nat Inside
+      ios_config:
+        lines:
+          - ip nat inside
+        parents: int e1/1
+    - name: Add Access List and PAT
+      ios_config:
+        lines:
+          - access-list 1 permit 192.168.1.0 0.0.0.255
+          - ip nat inside source list 1 interface e1/0 overload
+    - name: Backup router
+      ios_command:
+        commands:
+          - copy running-config startup-config
