@@ -1,3 +1,3 @@
 # Git
 
-This is the Git branch
+This is the Git branch.
