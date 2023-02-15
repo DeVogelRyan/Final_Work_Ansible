@@ -6,3 +6,6 @@
   - name: Install htop
     apt:
       name: htop
+  - name: Install cmatrix
+    apt:
+      name: cmatrix
