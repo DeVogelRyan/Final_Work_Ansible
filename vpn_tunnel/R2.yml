@@ -1,0 +1,8 @@
+---
+    - name: Create VPN tunnel
+      ios_config:
+        lines:
+          - "ip address {{ R2tunnelIP }} 255.255.255.252"
+          - "tunnel source {{ tunnelDestination }}"
+          - "tunnel destination {{ tunnelSource }}"
+        parents: int tunnel 0

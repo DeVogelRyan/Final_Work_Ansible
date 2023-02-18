@@ -1,0 +1,4 @@
+R1tunnelIP: 10.0.5.1
+R2tunnelIP: 10.0.5.2
+tunnelSource: 10.0.0.1
+tunnelDestination: 10.0.1.1
