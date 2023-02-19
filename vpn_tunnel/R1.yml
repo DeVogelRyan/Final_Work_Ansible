@@ -1,4 +1,8 @@
 ---
+    - name: OSPF
+      debug:
+        msg: "{{ OSPF['network1']['ip'] }}"
+
     - name: Create VPN tunnel
       ios_config:
         lines:

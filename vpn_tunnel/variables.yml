@@ -2,3 +2,8 @@ R1tunnelIP: 10.0.5.1
 tunnelSource: 10.0.0.1
 tunnelDestination: 10.0.1.1
 R2tunnelIP: 10.0.5.2
+OSPF:
+  network1:
+    ip: 192.168.10.0
+    wildcardMask: 0.0.0.255
+    area: 0
