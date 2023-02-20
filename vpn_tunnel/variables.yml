@@ -1,6 +1,6 @@
 
 R1network:
-  network0:
+  network1:
     ip: 192.168.20.0
     wildcardMask: 0.0.0.255
     area: 0

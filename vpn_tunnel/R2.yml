@@ -4,7 +4,7 @@
         parents: router ospf 1
         lines:
           - "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
-      loop: "{{ lookup('dict', R2network) }}"
+      loop: "{{ q('dict', R2network) }}"
         
       
     - name: Create VPN tunnel
