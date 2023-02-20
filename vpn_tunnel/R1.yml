@@ -1,14 +1,11 @@
 ---
-    - name: OSPF
-      #ios_config:
-       # lines:
-        #  - "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
-        #parents: router ospf 1
-
-
-      debug:
-        msg: "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
+    - name: add OSPF
+      ios_config:
+        parents: router ospf 1
+        lines:
+          - "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
       loop: "{{ lookup('dict', OSPF) }}"
+        
       
 
     - name: Create VPN tunnel

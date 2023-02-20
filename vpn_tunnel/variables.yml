@@ -4,10 +4,10 @@ tunnelDestination: 10.0.1.1
 R2tunnelIP: 10.0.5.2
 OSPF:
   network0:
-    ip: 192.168.10.0
+    ip: 192.168.1.0
     wildcardMask: 0.0.0.255
     area: 0
-  network1:
-    ip: 192.168.20.0
+  network0:
+    ip: 192.168.1.0
     wildcardMask: 0.0.0.255
-    area: 1
+    area: 0
