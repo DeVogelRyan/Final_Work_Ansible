@@ -1,13 +1,20 @@
-R1tunnelIP: 10.0.5.1
-tunnelSource: 10.0.0.1
-tunnelDestination: 10.0.1.1
-R2tunnelIP: 10.0.5.2
-OSPF:
+
+R1network:
   network0:
-    ip: 192.168.1.0
+    ip: 192.168.20.0
     wildcardMask: 0.0.0.255
     area: 0
-  network0:
-    ip: 192.168.1.0
+R2network:
+  network1:
+    ip: 192.168.40.0
     wildcardMask: 0.0.0.255
-    area: 0
+    area: 1
+Edgenetwork:
+  network2:
+    ip: 172.20.0.1
+    wildcardMask: 0.0.0.255
+    area: 50
+R1tunnelIP: 105.20.02.30
+R2tunnelIP: 150.02.20.1
+tunnelSource: 10.0.0.2
+tunnelDestination: 10.0.0.1
