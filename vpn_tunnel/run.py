@@ -81,6 +81,15 @@ def writeNetworksToFile(OSPFList: list, TAG: str):
     file.close()  # Close the file
 
 
+def testPing(host):
+    response = os.system(f"ping {host} -c 1")
+    # and then check the response...
+    if response == 0:
+        print(host, 'is up!')
+    else:
+        print(host, 'is down!')
+
+
 def getVPNDetails():
     tunnelSource = input("[R1] Tunnel source: ")
     tunnelDestination = input("[R1] Tunnel destination: ")
@@ -100,7 +109,8 @@ def getVPNDetails():
 
 
 if __name__ == "__main__":
-    clearFile()
+    testPing("google.com")
+    """clearFile()
     R1Networks, R2Networks, EdgeNetworks = [], [], []
     listOfNetworks = [R1Networks, R2Networks, EdgeNetworks]
     Routers = ["R1", "R2", "Edge"]
@@ -108,4 +118,4 @@ if __name__ == "__main__":
         getOSPFdetails(listOfNetworks[i], Routers[i])
         writeNetworksToFile(listOfNetworks[i], Routers[i])
     print("We're done with the OSPF configuration let's now configure the VPN tunnel.")
-    getVPNDetails()
+    getVPNDetails()"""
