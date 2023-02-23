@@ -1,16 +1,24 @@
 ---
-    - name: add OSPF
-      ios_config:
-        parents: router ospf 1
-        lines:
-          - "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
-      loop: "{{ q('dict', R1network) }}"
-        
-      
-    - name: Create VPN tunnel
-      ios_config:
-        lines:
-          - "ip address {{ R1tunnelIP }} 255.255.255.252"
-          - "tunnel source {{ tunnelSource }}"
-          - "tunnel destination {{ tunnelDestination }}"
-        parents: int tunnel 0
+- name: Clear OSPf config
+  ios_config:
+    lines:
+      - "no router ospf 1"
+
+- name: add OSPF
+  ios_config:
+    parents: router ospf 1
+    lines:
+      - "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
+  loop: "{{ q('dict', R2network) }}"
+    
+- name: Test Source and Destination
+   ping:
+       crash: data
+
+- name: Create VPN tunnel
+  ios_config:
+    lines:
+      - "ip address {{ R1tunnelIP }} 255.255.255.252"
+      - "tunnel source {{ tunnelSource }}"
+      - "tunnel destination {{ tunnelDestination }}"
+    parents: int tunnel 0
