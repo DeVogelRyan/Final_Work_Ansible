@@ -1,4 +1,12 @@
 ---
+- name: Add DHCP config
+  ios_config:
+    parents: ip dhcp pool {{ Pool_name_R1 }}
+    lines:
+      - "network {{ item.value.ip }} {{ item.value.subnet }}"
+      - "default-router {{ Default_Router_R1 }}"
+  loop: "{{ q('dict', DHCPNetwork_R1) }}"
+
 - name: Clear OSPf config
   ios_config:
     lines:
@@ -9,11 +17,7 @@
     parents: router ospf 1
     lines:
       - "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
-  loop: "{{ q('dict', R2network) }}"
-    
-- name: Test Source and Destination
-   ping:
-       crash: data
+  loop: "{{ q('dict', R1network) }}"
 
 - name: Create VPN tunnel
   ios_config:

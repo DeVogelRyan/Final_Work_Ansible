@@ -1,20 +1,20 @@
 import itertools
 
 
-class OSPF:
+class Network:
     newid = itertools.count()
 
-    def __init__(self, tag, ip, wildcard, area):
-        self.id = next(OSPF.newid)
-        self.tag = tag
-        self.ip = ip
-        self.wildcard = wildcard
-        self.area = area
-
-    def func(self):
-        print("After calling func() method..")
-        print("my tag is", self.tag)
-        print("my ID is", self.id)
-        print("My ip is", self.ip)
-        print("My wildcardmask is", self.wildcard)
-        print("My subnet is", self.area)
+    def __init__(self, *args):
+        # DHCP
+        if len(args) == 3:
+            self.id = next(Network.newid)
+            self.tag = args[1]
+            self.network = args[2]
+            self.subnet = args[3]
+        # OSPF
+        elif len(args) == 4:
+            self.id = next(Network.newid)
+            self.tag = args[1]
+            self.network = args[2]
+            self.wildcard = args[3]
+            self.area = args[4]
