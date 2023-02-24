@@ -30,14 +30,14 @@ def getDHCPNetworks(DHCPList: list, TAG: str):
 
 
 def WriteDHCPToFile(pool: str, defaultRouter: str,  TAG: str):
-    file = open('variables.yml', 'a')  # Open a file in append mode
+    file = open('./ansible/variables.yml', 'a')  # Open a file in append mode
     file.write(f'\nDHCP_Pool_{TAG}: {pool}')  # Write some text
     file.write(f'\nDHCP_Default_Router_{TAG}: {defaultRouter}')
     file.close()  # Close the file
 
 
 def WriteDHCPListToFile(DHCPList: list, TAG: str):
-    file = open('variables.yml', 'a')  # Open a file in append mode
+    file = open('./ansible/variables.yml', 'a')  # Open a file in append mode
     file.write(f'\nDHCPNetwork_{TAG}:')  # Write some text
     # Looping over the given list with objects that look like the following:
     # {
@@ -71,7 +71,7 @@ def getOSPFdetails(OSPFList: list, TAG: str):
 
 
 def writeNetworksToFile(OSPFList: list, TAG: str):
-    file = open('variables.yml', 'a')  # Open a file in append mode
+    file = open('./ansible/variables.yml', 'a')  # Open a file in append mode
     file.write(f'\nOSPFNetwork_{TAG}:')  # Write some text
     # Looping over the given list with objects that look like the following:
     # {
@@ -104,7 +104,7 @@ def getVPNDetails():
 
 
 def writeVPnDetailsToFile(R1tunnelIP, R2tunnelIP, tunnelSource, tunnelDestination):
-    file = open('variables.yml', 'a')  # Open a file in append mode
+    file = open('./ansible/variables.yml', 'a')  # Open a file in append mode
     file.write(f'\nR1tunnelIP: {R1tunnelIP}')  # Write some text
     file.write(f'\nR2tunnelIP: {R2tunnelIP}')  # Write some text
     file.write(f'\ntunnelSource: {tunnelSource}')  # Write some text
@@ -114,14 +114,15 @@ def writeVPnDetailsToFile(R1tunnelIP, R2tunnelIP, tunnelSource, tunnelDestinatio
 
 if __name__ == "__main__":
     clearFile()
-    R1DHCPNetworks, R2DHCPNetworks = [], []
-    getDetailsDHCP(R1DHCPNetworks, "R1")
-    getDetailsDHCP(R2DHCPNetworks, "R2")
-    R1Networks, R2Networks, EdgeNetworks = [], [], []
-    listOfNetworks = [R1Networks, R2Networks, EdgeNetworks]
     Routers = ["R1", "R2", "Edge"]
+    R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks = [], [], []
+    listOfDHCPNetworks = [R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks]
+    for i in range(2):
+        getDetailsDHCP(listOfDHCPNetworks[i], Routers[i])
+    R1Networks, R2Networks, EdgeNetworks = [], [], []
+    listOfOSPFNetworks = [R1Networks, R2Networks, EdgeNetworks]
     for i in range(3):
-        getOSPFdetails(listOfNetworks[i], Routers[i])
-        writeNetworksToFile(listOfNetworks[i], Routers[i])
+        getOSPFdetails(listOfOSPFNetworks[i], Routers[i])
+        writeNetworksToFile(listOfOSPFNetworks[i], Routers[i])
     print("We're done with the OSPF configuration let's now configure the VPN tunnel.")
     getVPNDetails()

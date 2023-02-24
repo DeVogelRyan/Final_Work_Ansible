@@ -1,8 +1,11 @@
 import re
+import os
 
 
 def clearFile():
-    file = open('variables.yml', 'a')  # Open a file in append mode
+    if not os.path.exists("ansible"):
+        os.makedirs("ansible")
+    file = open('./ansible/variables.yml', 'a')  # Open a file in append mode
     file.truncate(0)  # Clear all the text
     file.close()  # Close the file for safety reasons
 
