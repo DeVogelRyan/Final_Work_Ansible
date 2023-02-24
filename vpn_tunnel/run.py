@@ -26,9 +26,6 @@ def getDHCPNetworks(DHCPList: list, TAG: str):
         return
     # adding our class to a list
     DHCPList.append(Network(TAG, network, subnet))
-    if Menu(f"Do you want to configure another DHCP network for {TAG}") == True:
-        getDHCPNetworks(DHCPList, TAG)
-        return
     WriteDHCPListToFile(DHCPList, TAG)
 
 
@@ -52,7 +49,7 @@ def WriteDHCPListToFile(DHCPList: list, TAG: str):
     for item in DHCPList:
         file.write(f'\n  network{item.id}:')  # Write some text
         file.write(f'\n    ip: {item.network}')
-        file.write(f'\n    wildcardMask: {item.subnet}')
+        file.write(f'\n    subnet: {item.subnet}')
     file.close()  # Close the file
 
 
@@ -86,7 +83,7 @@ def writeNetworksToFile(OSPFList: list, TAG: str):
     # }
     for item in OSPFList:
         file.write(f'\n  network{item.id}:')  # Write some text
-        file.write(f'\n    ip: {item.ip}')
+        file.write(f'\n    ip: {item.network}')
         file.write(f'\n    wildcardMask: {item.wildcard}')
         file.write(f'\n    area: {item.area}')
     file.close()  # Close the file

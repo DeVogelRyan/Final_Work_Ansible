@@ -8,13 +8,13 @@ class Network:
         # DHCP
         if len(args) == 3:
             self.id = next(Network.newid)
-            self.tag = args[1]
-            self.network = args[2]
-            self.subnet = args[3]
+            self.tag = args[0]
+            self.network = args[1]
+            self.subnet = args[2]
         # OSPF
         elif len(args) == 4:
             self.id = next(Network.newid)
-            self.tag = args[1]
-            self.network = args[2]
-            self.wildcard = args[3]
-            self.area = args[4]
+            self.tag = args[0]
+            self.network = args[1]
+            self.wildcard = args[2]
+            self.area = args[3]

@@ -1,4 +1,32 @@
 
-DHCP_Pool_R1: R
-DHCP_Default_Router_R1: 192.168.1.1
+DHCP_Pool_R1: Antwerpen
+DHCP_Default_Router_R1: 192.168.10.1
 DHCPNetwork_R1:
+  network0:
+    ip: 192.168.10.0
+    subnet: 255.255.255.0
+DHCP_Pool_R2: Gent
+DHCP_Default_Router_R2: 172.16.20.1
+DHCPNetwork_R2:
+  network2:
+    ip: 172.16.20.0
+    subnet: 255.255.255.0
+OSPFNetwork_R1:
+  network3:
+    ip: 192.168.10.0
+    wildcardMask: 0.0.0.255
+    area: 0
+OSPFNetwork_R2:
+  network4:
+    ip: 172.16.20.0
+    wildcardMask: 0.0.0.255
+    area: 0
+OSPFNetwork_Edge:
+  network5:
+    ip: 172.16.20.0
+    wildcardMask: 0.0.0.255
+    area: 0
+R1tunnelIP: 10.0.5.1
+R2tunnelIP: 10.0.5.2
+tunnelSource: 10.0.0.1
+tunnelDestination: 10.0.1.1
