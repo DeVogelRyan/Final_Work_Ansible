@@ -12,4 +12,23 @@
     - include_vars: variables.yml
     - include: R2.yml
 
+- hosts: Edge
+  gather_facts: false
+  connection: local
+  tasks:
+    - include_vars: variables.yml
+    - include: Edge.yml
+
+- hosts: all
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: enable password encryption service
+      ios_config: 
+        lines:
+          - "service password-encryption"
+
+
+
+
   

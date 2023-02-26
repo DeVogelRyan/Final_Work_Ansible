@@ -4,10 +4,23 @@ from basic_functions import *
 # os.system("ansible-playbook main.yml -u cisco -k")
 
 
+def getBannerMessages(TAG: str):
+    bannerMessage = input(f"[{TAG}] Banner message: ")
+    if (len(bannerMessage) > 0):
+        # Open a file in append mode
+        file = open('./ansible/variables.yml', 'a')
+        file.write(f"\n{TAG}_banner: '{bannerMessage}'")  # Write some text
+        file.close()  # Close the file
+    else:
+        getBannerMessages(TAG)
+
+
 def getDetailsDHCP(DHCPList: list, TAG: str):
     print("setup DHCP...")
+    # strip() removes any spaces that might have been added.
     pool = input(f"[{TAG}] Pool name: ").strip()
     defaultRouter = input(f"[{TAG}] Default-router: ")
+    # Checking if all the details are valid. Else we ask to fill it in again.
     if (valid_ip_address(defaultRouter) == False or len(pool) == 0):
         print("One of the inputs was wrong let's start again.")
         getDetailsDHCP(DHCPList, TAG)
@@ -115,7 +128,10 @@ def writeVPnDetailsToFile(R1tunnelIP, R2tunnelIP, tunnelSource, tunnelDestinatio
 if __name__ == "__main__":
     clearFile()
     Routers = ["R1", "R2", "Edge"]
-    R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks = [], [], []
+    getBannerMessages(Routers[0])
+    getBannerMessages(Routers[1])
+    getBannerMessages(Routers[2])
+    """ R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks = [], [], []
     listOfDHCPNetworks = [R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks]
     for i in range(2):
         getDetailsDHCP(listOfDHCPNetworks[i], Routers[i])
@@ -125,4 +141,4 @@ if __name__ == "__main__":
         getOSPFdetails(listOfOSPFNetworks[i], Routers[i])
         writeNetworksToFile(listOfOSPFNetworks[i], Routers[i])
     print("We're done with the OSPF configuration let's now configure the VPN tunnel.")
-    getVPNDetails()
+    getVPNDetails()"""

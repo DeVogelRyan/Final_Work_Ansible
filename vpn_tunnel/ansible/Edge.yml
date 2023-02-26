@@ -1,0 +1,18 @@
+---
+- name: Change Banner
+  ios_banner:
+    banner: motd
+    text: "{{ Edge_banner }}"
+    state: present
+
+- name: Clear OSPf config
+  ios_config:
+    lines:
+      - "no router ospf 1"
+
+- name: add OSPF
+  ios_config:
+    parents: router ospf 1
+    lines:
+      - "network {{ item.value.ip }} {{ item.value.wildcardMask }} area {{ item.value.area }}"
+  loop: "{{ q('dict', OSPFNetwork_Edge) }}"
