@@ -19,20 +19,40 @@ DHCPNetwork_R2:
     ip: 172.16.15.0
     subnet: 255.255.255.0
 OSPFNetwork_R1:
-  network3:
+  network2:
     ip: 192.168.10.0
     wildcardMask: 0.0.0.255
     area: 0
+  network3:
+    ip: 10.0.5.0
+    wildcardMask: 0.0.0.3
+    area: 0
+   network4:
+    ip: 10.0.0.0
+    wildcardMask: 0.0.0.3
+    area: 1
 OSPFNetwork_R2:
-  network4:
-    ip: 172.16.20.0
-    wildcardMask: 0.0.0.255
-    area: 0
-OSPFNetwork_Edge:
   network5:
-    ip: 172.16.20.0
+    ip: 172.16.15.0
     wildcardMask: 0.0.0.255
     area: 0
+  network6:
+    ip: 10.0.5.0
+    wildcardMask: 0.0.0.3
+    area: 0
+   network7:
+    ip: 10.0.1.0
+    wildcardMask: 0.0.0.3
+    area: 1
+OSPFNetwork_Edge:
+  network8:
+    ip: 10.0.0.0
+    wildcardMask: 0.0.0.3
+    area: 1
+  network9:
+    ip: 10.0.1.0
+    wildcardMask: 0.0.0.3
+    area: 1
 R1tunnelIP: 10.0.5.1
 R2tunnelIP: 10.0.5.2
 tunnelSource: 10.0.0.1
