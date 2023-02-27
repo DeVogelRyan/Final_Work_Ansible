@@ -1,4 +1,39 @@
 
-R1_banner: 'Ryan'
-R2_banner: 'xd'
-Edge_banner: 'xd'
+R1_banner: 'R1 Router'
+R2_banner: 'R2 Router'
+Edge_banner: 'Edge Router'
+DHCP_Pool_R1: Gent
+DHCP_Default_Router_R1: 192.168.1.1
+DHCP_Default_Router_Subnet_R1: 255.255.255.0
+DHCP_Default_Router_Interface_R1: FastEthernet0/0
+DHCPNetwork_R1:
+  network0:
+    ip: 192.168.1.0
+    subnet: 255.255.255.0
+DHCP_Pool_R2: Brussel
+DHCP_Default_Router_R2: 172.16.15.1
+DHCP_Default_Router_Subnet_R2: 255.255.255.0
+DHCP_Default_Router_Interface_R2: FastEthernet0/0
+DHCPNetwork_R2:
+  network1:
+    ip: 172.16.15.0
+    subnet: 255.255.255.0
+OSPFNetwork_R1:
+  network3:
+    ip: 192.168.10.0
+    wildcardMask: 0.0.0.255
+    area: 0
+OSPFNetwork_R2:
+  network4:
+    ip: 172.16.20.0
+    wildcardMask: 0.0.0.255
+    area: 0
+OSPFNetwork_Edge:
+  network5:
+    ip: 172.16.20.0
+    wildcardMask: 0.0.0.255
+    area: 0
+R1tunnelIP: 10.0.5.1
+R2tunnelIP: 10.0.5.2
+tunnelSource: 10.0.0.1
+tunnelDestination: 10.0.1.1

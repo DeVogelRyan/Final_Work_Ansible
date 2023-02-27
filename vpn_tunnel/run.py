@@ -1,7 +1,6 @@
 import os
 from network import Network
 from basic_functions import *
-# os.system("ansible-playbook main.yml -u cisco -k")
 
 
 def getBannerMessages(TAG: str):
@@ -20,12 +19,18 @@ def getDetailsDHCP(DHCPList: list, TAG: str):
     # strip() removes any spaces that might have been added.
     pool = input(f"[{TAG}] Pool name: ").strip()
     defaultRouter = input(f"[{TAG}] Default-router: ")
+    subnet = input(
+        f"[{TAG}] Subnet mask(ex. 255.255.255.0) for Default-router: ")
+    print("Let's now choose an interface for the Default-Router. Here is a list: ")
+    # Here we run show ip interface brief on the given host.
+    os.system(f"ansible {TAG} -m raw -a 'show ip int brief' -u cisco -k")
+    interface = input(f"[{TAG}] Interface for default-router: ")
     # Checking if all the details are valid. Else we ask to fill it in again.
-    if (valid_ip_address(defaultRouter) == False or len(pool) == 0):
+    if (valid_ip_address(defaultRouter) == False or valid_ip_address(subnet) == False or len(pool) == 0 or len(interface) == 0):
         print("One of the inputs was wrong let's start again.")
         getDetailsDHCP(DHCPList, TAG)
         return
-    WriteDHCPToFile(pool, defaultRouter, TAG)
+    WriteDHCPToFile(pool, defaultRouter, subnet, interface, TAG)
     getDHCPNetworks(DHCPList, TAG)
 
 
@@ -42,10 +47,12 @@ def getDHCPNetworks(DHCPList: list, TAG: str):
     WriteDHCPListToFile(DHCPList, TAG)
 
 
-def WriteDHCPToFile(pool: str, defaultRouter: str,  TAG: str):
+def WriteDHCPToFile(pool: str, defaultRouter: str,  subnet: str, interface: str, TAG: str):
     file = open('./ansible/variables.yml', 'a')  # Open a file in append mode
     file.write(f'\nDHCP_Pool_{TAG}: {pool}')  # Write some text
     file.write(f'\nDHCP_Default_Router_{TAG}: {defaultRouter}')
+    file.write(f'\nDHCP_Default_Router_Subnet_{TAG}: {subnet}')
+    file.write(f'\nDHCP_Default_Router_Interface_{TAG}: {interface}')
     file.close()  # Close the file
 
 
@@ -128,17 +135,18 @@ def writeVPnDetailsToFile(R1tunnelIP, R2tunnelIP, tunnelSource, tunnelDestinatio
 if __name__ == "__main__":
     clearFile()
     Routers = ["R1", "R2", "Edge"]
-    getBannerMessages(Routers[0])
+    """getBannerMessages(Routers[0])
     getBannerMessages(Routers[1])
-    getBannerMessages(Routers[2])
-    """ R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks = [], [], []
+    getBannerMessages(Routers[2])"""
+    R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks = [], [], []
     listOfDHCPNetworks = [R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks]
     for i in range(2):
         getDetailsDHCP(listOfDHCPNetworks[i], Routers[i])
-    R1Networks, R2Networks, EdgeNetworks = [], [], []
+    """ R1Networks, R2Networks, EdgeNetworks = [], [], []
     listOfOSPFNetworks = [R1Networks, R2Networks, EdgeNetworks]
     for i in range(3):
         getOSPFdetails(listOfOSPFNetworks[i], Routers[i])
         writeNetworksToFile(listOfOSPFNetworks[i], Routers[i])
     print("We're done with the OSPF configuration let's now configure the VPN tunnel.")
-    getVPNDetails()"""
+    getVPNDetails()
+    os.system("ansible-playbook ./ansible/main.yml -u cisco -k")"""

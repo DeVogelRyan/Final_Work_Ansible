@@ -27,8 +27,3 @@
       ios_config: 
         lines:
           - "service password-encryption"
-
-
-
-
-  
