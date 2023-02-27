@@ -10,6 +10,7 @@
     parents: "int {{ DHCP_Default_Router_Interface_R2 }}"
     lines:
       - "ip addr {{ DHCP_Default_Router_R2 }} {{ DHCP_Default_Router_Subnet_R2 }}"
+      - "no sh"
 
 - name: Add DHCP config
   ios_config:
@@ -18,6 +19,11 @@
       - "network {{ item.value.ip }} {{ item.value.subnet }}"
       - "default-router {{ DHCP_Default_Router_R2 }}"
   loop: "{{ q('dict', DHCPNetwork_R2) }}"
+
+- name: Exclude default-Router IP
+  ios_config:
+    lines:
+      - "ip dhcp excluded-address {{ DHCP_Default_Router_R2 }}"
 
 - name: Clear OSPf config
   ios_config:

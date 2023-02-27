@@ -135,18 +135,18 @@ def writeVPnDetailsToFile(R1tunnelIP, R2tunnelIP, tunnelSource, tunnelDestinatio
 if __name__ == "__main__":
     clearFile()
     Routers = ["R1", "R2", "Edge"]
-    """getBannerMessages(Routers[0])
+    getBannerMessages(Routers[0])
     getBannerMessages(Routers[1])
-    getBannerMessages(Routers[2])"""
+    getBannerMessages(Routers[2])
     R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks = [], [], []
     listOfDHCPNetworks = [R1DHCPNetworks, R2DHCPNetworks, EdgeDHCPNetworks]
     for i in range(2):
         getDetailsDHCP(listOfDHCPNetworks[i], Routers[i])
-    """ R1Networks, R2Networks, EdgeNetworks = [], [], []
+    R1Networks, R2Networks, EdgeNetworks = [], [], []
     listOfOSPFNetworks = [R1Networks, R2Networks, EdgeNetworks]
     for i in range(3):
         getOSPFdetails(listOfOSPFNetworks[i], Routers[i])
         writeNetworksToFile(listOfOSPFNetworks[i], Routers[i])
     print("We're done with the OSPF configuration let's now configure the VPN tunnel.")
     getVPNDetails()
-    os.system("ansible-playbook ./ansible/main.yml -u cisco -k")"""
+    os.system("ansible-playbook ./ansible/main.yml -u cisco -k")
